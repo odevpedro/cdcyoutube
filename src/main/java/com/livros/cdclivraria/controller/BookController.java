@@ -4,8 +4,12 @@ import com.livros.cdclivraria.config.Uploader;
 import com.livros.cdclivraria.dto.BookDto;
 import com.livros.cdclivraria.model.Book;
 import com.livros.cdclivraria.repositories.AuthorRepository;
+import com.livros.cdclivraria.repositories.BookRepository;
 import com.livros.cdclivraria.services.BookService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,18 +19,21 @@ public class BookController {
     private final BookService bookService;
     private final AuthorRepository authorRepository;
     private final Uploader uploader;
+    private final BookRepository bookRepository;
 
-    public BookController(BookService bookService, AuthorRepository authorRepository, Uploader uploader) {
+    public BookController(BookService bookService, AuthorRepository authorRepository, AuthorRepository authorRepository1, Uploader uploader, BookRepository bookRepository) {
         this.bookService = bookService;
-        this.authorRepository = authorRepository;
+        this.authorRepository = authorRepository1;
         this.uploader = uploader;
+        this.bookRepository = bookRepository;
     }
 
 
 
   @PostMapping("/api/livros")
-    public void save(@Valid BookDto bookDto){
+  @Transactional
+    public ResponseEntity<Object> saveBook(@Valid BookDto bookDto){
         Book book = bookDto.newBook(authorRepository,uploader);
-      System.out.println(book);
+        return ResponseEntity.status(HttpStatus.CREATED).body(bookService.save(book));
     }
 }

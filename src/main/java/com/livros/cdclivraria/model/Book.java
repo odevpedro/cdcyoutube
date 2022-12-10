@@ -22,10 +22,10 @@ public class Book {
     @NotBlank @Size(max = 100)
     private String titulo;
 
-    @NotBlank @Size(max = 50)
+    @NotBlank
     private String subTitulo;
 
-    @NotBlank @Size(min = 20)
+    @NotNull @Min(20)
     private BigDecimal preco;
 
     @NotBlank
@@ -34,7 +34,7 @@ public class Book {
     @NotBlank
     private String sumario;
 
-    @NotBlank
+    @NotNull
     private BigDecimal numeroPaginas;
 
     @NotBlank

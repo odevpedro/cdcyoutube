@@ -8,6 +8,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,30 +21,29 @@ public class BookDto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 10)
+    @NotBlank
     private String titulo;
 
-    @Column(nullable = false, unique = true, length = 10)
+    @NotBlank
     private String subTitulo;
 
-    @Column(nullable = false, unique = true, length = 10)
+    @Min(10)
     private BigDecimal preco;
 
-    @Column(nullable = false, unique = true, length = 10)
+    @NotBlank
     private String conteudo;
 
-    @Column(nullable = false, unique = true, length = 10)
+    @NotBlank
     private String sumario;
 
-    @Column(nullable = false, unique = true, length = 10)
+    @Min(100)
     private BigDecimal numeroPaginas;
 
-    @Column(nullable = false, unique = true, length = 10)
+    @NotBlank
     private String isbn;
 
-    @Column(nullable = false, unique = true, length = 10)
+    @NotNull
     private MultipartFile capa;
-
 
 
     @NotNull
