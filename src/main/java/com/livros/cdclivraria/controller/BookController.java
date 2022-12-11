@@ -33,7 +33,14 @@ public class BookController {
   @PostMapping("/api/livros")
   @Transactional
     public ResponseEntity<Object> saveBook(@Valid BookDto bookDto){
+        //estabelecendo condições:
+      if (bookService.existsByIsbn(bookDto.getIsbn())){
+          return ResponseEntity.status(HttpStatus.CONFLICT).body("Numero de isbn já cadastrado");
+      }
         Book book = bookDto.newBook(authorRepository,uploader);
         return ResponseEntity.status(HttpStatus.CREATED).body(bookService.save(book));
     }
+
+
+    
 }

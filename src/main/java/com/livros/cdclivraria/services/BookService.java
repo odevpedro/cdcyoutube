@@ -17,4 +17,7 @@ public class BookService {
     }
 
 
+    public boolean existsByIsbn(String isbn) {
+        return bookRepository.existsByIsbn(isbn);
+    }
 }
